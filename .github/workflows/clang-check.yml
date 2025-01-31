@@ -1,16 +1,43 @@
-on: push
+# .github/workflows/clang-check.yml
+name: Clang Check
+
+on: [push, pull_request]
 
 jobs:
-  clang-format:
+  clang-check:
     runs-on: ubuntu-latest
-    container: ghcr.io/cpp-linter/clang-tools:18
     steps:
-      - uses: actions/checkout@v4
-      - run: clang-format --dry-run -Werror *.cpp
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  clang-tidy:
-    runs-on: ubuntu-latest
-    container: ghcr.io/cpp-linter/clang-tools:18
-    steps:
-      - uses: actions/checkout@v4
-      - run: clang-tidy *.cpp -- -std=c++20
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v1
+        with:
+          cmake-version: '3.20.0' 
+
+      - name: Install SFML
+        run: |
+          sudo apt-get update
+          sudo apt-get install libsfml-dev
+
+      - name: Build project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+
+      - name: Run Clang-Tidy
+        run: |
+          cd build
+          clang-tidy ../*.cpp -- -std=c++20 -I/usr/include/SFML
+
+      - name: Install clang-format
+        run: |
+          sudo apt-get update
+          sudo apt-get install clang-format
+
+      - name: Check format
+        run: |
+          clang-format -style=file -i **/*.cpp **/*.hpp
+          git diff --exit-code
