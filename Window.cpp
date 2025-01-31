@@ -183,11 +183,6 @@ void InputField::ExecuteCalculation(sf::RenderWindow& window, Button& button, si
                 text_.setString(Numbers::CalculateExpression(expression));
                 break;
             }
-
-            default: {
-                text_.setString("Invalid input");
-                break;
-            }
         }
     }
 
