@@ -17,7 +17,7 @@ Simple calculator created with C++ using the sfml library
 
 # ✨ How to install
   **Download this**
-  * [SFML](https://www.sfml-dev.org/download/sfml/2.5.1/)
+  * [SFML](https://www.sfml-dev.org/download/sfml/2.6.1/)
   * [Calculator Files](https://github.com/IvanDrf/Calculator/tree/develop)
   * [CMake (optional)](https://cmake.org/)
 
