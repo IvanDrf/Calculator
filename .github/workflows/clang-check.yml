@@ -1,0 +1,43 @@
+# .github/workflows/clang-check.yml
+name: Clang Check
+
+on: [push, pull_request]
+
+jobs:
+  clang-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v1
+        with:
+          cmake-version: '3.20.0'
+
+      - name: Install SFML
+        run: |
+          sudo apt-get update
+          sudo apt-get install libsfml-dev
+
+      - name: Build project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+
+      - name: Run Clang-Tidy
+        run: |
+          cd build
+          clang-tidy ../*.cpp -- -std=c++20 -I/usr/include/SFML
+
+      - name: Install clang-format
+        run: |
+          sudo apt-get update
+          sudo apt-get install clang-format
+
+      - name: Check format
+        run: |
+          clang-tidy *.cpp -- -std=c++20
+          git diff --exit-code
