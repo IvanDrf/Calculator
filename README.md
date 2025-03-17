@@ -1,5 +1,5 @@
 # Calculator ![C++](https://img.shields.io/badge/-С++-090909?style=for-the-badge&logo=C%2b%2b&logoColor=6296CC)
-Simple calculator created with C++ using the sfml library
+Simple calculator created with C++ using the SFML library
 
 ![image](https://github.com/user-attachments/assets/43357961-16c6-423a-983b-af3af3ae2b33)
 
